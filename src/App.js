@@ -57,6 +57,9 @@ class App extends Component {
           <input type="submit" value="Submit"/>
         </form>
 
+        {this.state.relatedItems.map(function(item, i){
+              return <h1 key={i}>{item.food.brand} {item.food.label} </h1>
+        })}
       </div>
     );
   }
