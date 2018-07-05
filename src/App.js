@@ -20,8 +20,6 @@ class App extends Component {
     return fetch('https://api.edamam.com/api/food-database/parser?ingr='+item+'&app_id='+this.state.appID+'&app_key='+this.state.appKey)
       .then((response) => response.json())
       .then((responseJson) => {
-        // console.log(responseJson);
-        console.log(responseJson.hints[0].food.label);
         this.setState({relatedItems: responseJson.hints});
         console.log(this.state.relatedItems);
         return responseJson.hints;
@@ -46,7 +44,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Nutrition App</h1>
         </header>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
