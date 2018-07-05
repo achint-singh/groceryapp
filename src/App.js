@@ -6,23 +6,40 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      foodItem: ""
+      foodItem: "",
+      relatedItems: [],
+      appID: "1a53aa6a",
+      appKey: "4dede038213c6fa35890d3f97c6c82ae",
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  
+   getFoodItemsFromApi(item) {
+    return fetch('https://api.edamam.com/api/food-database/parser?ingr='+item+'&app_id='+this.state.appID+'&app_key='+this.state.appKey)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // console.log(responseJson);
+        console.log(responseJson.hints[0].food.label);
+        this.setState({relatedItems: responseJson.hints});
+        console.log(this.state.relatedItems);
+        return responseJson.hints;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   handleSubmit(event) {
-    console.log("A search was submitted");
-    console.log(this.state.foodItem);
+    console.log("A search was submitted" + this.state.foodItem);
+    this.getFoodItemsFromApi(this.state.foodItem)
     event.preventDefault();
   }
 
   handleChange(event) {
     this.setState({foodItem: event.target.value});
   }
-
 
   render() {
     return (
